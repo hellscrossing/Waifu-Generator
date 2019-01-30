@@ -1,0 +1,3 @@
+/home/hellscrossing/Documents/PROJECTS/waifu/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/hellscrossing/Documents/PROJECTS/waifu/cmake-build-debug/CMakeFiles/waifu.dir
+/home/hellscrossing/Documents/PROJECTS/waifu/cmake-build-debug/CMakeFiles/edit_cache.dir

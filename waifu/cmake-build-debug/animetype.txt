@@ -1,0 +1,11 @@
+action
+slice-of-life
+drama
+comedy
+psychological
+historical
+mecha
+millitary
+magic
+supernatural
+romance

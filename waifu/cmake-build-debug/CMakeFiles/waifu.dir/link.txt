@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/waifu.dir/main.cpp.o  -o waifu 
