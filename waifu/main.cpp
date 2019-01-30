@@ -1,6 +1,7 @@
 // Hello there!
 // This program generates a waifu for you using random variable selections.
 // Program written by Sarah Nadzan.
+// Additions by Amp9312
 
 // Libraries included.
 #include <iostream>
@@ -19,6 +20,7 @@ static const size_t MAX_EYECOLORS = 100; // eye color types
 static const size_t MAX_COMPLEXION = 100; // complexion types
 static const size_t MAX_PERSONALITY = 100; // personality types
 static const size_t MAX_ANIME = 100; // anime types.
+static const size_t MAX_NAME = 100; // Total number of names
 
 struct waifu{
     std::string love; // love type.
@@ -29,7 +31,19 @@ struct waifu{
     std::string complexion; // complexion.
     std::string personality; // personality.
     std::string anime; // anime.
+    int happy; //happiness level
+    std::string name; //name
 };
+
+//function that begins the "Dating Sim" section of game
+//Start with reference to waifu struct
+/*void DatingSim(waifu& waifu){
+//begin loop until waifu is in "love" state
+    while(waifu.happy < 100){
+        //Start with neutral state
+    }
+}
+ */
 
 // Function to overload the operator to work with the waifu types. RHS = right hand side.
 // Outputs the anime girl description.
@@ -39,8 +53,8 @@ std::ostream & operator << (std::ostream & os, const waifu & rhs) {
     os << "Her hair is a " << rhs.modifier << " " << rhs.haircolor << ", in a " << rhs.hairstyle << " style. \n" << std::endl;
     os << "Her eyes are " << rhs.eyecolor << ", and she has a " << rhs.complexion << " complexion.\n" << std::endl;
     os << "She has a very " << rhs.personality << " personality, and she is from a " << rhs.anime << " anime!" << std::endl;
-
-
+    os << "Happiness level is " << rhs.happy << std::endl;
+    os << "She waves to you: Hello! My name is " << rhs.name << std::endl;
     return os;
 }
 
@@ -68,6 +82,7 @@ int main() {
         std::string complexions[MAX_COMPLEXION]; // complexion.
         std::string personalities[MAX_PERSONALITY]; // personality.
         std::string animes[MAX_ANIME]; // anime.
+        std::string names[MAX_NAME]; // creates array the size of the name list
 
         // Opening the file.
 
@@ -118,6 +133,11 @@ int main() {
         if (!animestream) {
             std::cout << "Unable to open the anime file." << std::endl;
         }
+        //Pulls data from nametype text file. Freaks if 404
+        std::ifstream namestream("nametype.txt");
+        if(!namestream){
+            std::cout << "Unable to open the name file." << std::endl;
+        }
 
         // Counts how many options are in the file.
 
@@ -129,6 +149,7 @@ int main() {
         size_t complexioncount = 0; // complexion count.
         size_t personalitycount = 0; // personality count.
         size_t animecount = 0; // anime count.
+        size_t namecount = 0; //name count
 
         waifu waifu;
 
@@ -166,6 +187,9 @@ int main() {
         while (std::getline(animestream, animes[animecount++])) {
         }
         animecount--;
+        while(std::getline(namestream, names[namecount++])){
+        }
+        namecount--;
 
         waifu.love = loves[rand() % lovecount]; // assigning the love type of the waifu.
         waifu.modifier = hairmodifiers[rand() % modifiercount]; // assigning the hair modifier of the waifu.
@@ -175,12 +199,25 @@ int main() {
         waifu.complexion = complexions[rand() % complexioncount]; // assigning complexion of the waifu.
         waifu.personality = personalities[rand() % personalitycount]; // assigning the personality of the waifu.
         waifu.anime = animes[rand() % animecount]; // assigning the anime of the waifu.
+        waifu.name = names[rand() % namecount]; //assigning the name of waifu
 
         std::cout << "Your waifu is generated! \n" << std::endl;
+
+
+
         std::cout << waifu << std::endl;
         std::cout << "Would you like to generate another? (y/n)\n" << std::endl;
+        //std::locale loc;
         std::cin >> play_again;
+
+        //User Sanitization - If an uppercase is entered it's casted to lowercase
+        //Temporary hotfix, change while loop later to be more efficient
+        if(play_again == "Y")
+            play_again = "y";
+
     }
+    //insert conditional: "If "n" then prompt for date sim minigame
+    //if no, exit. If yes, call DatingSim function
 
     std::cout << "\nThank you for using the Waifu Generator!" << std::endl;
     return 0;
